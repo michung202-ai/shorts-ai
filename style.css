@@ -1,1 +1,79 @@
-/* Add styles here */
+
+:root {
+    --background-color: #1a1a1a;
+    --font-color: #ffffff;
+    --ball-size: 80px;
+    --ball-font-size: 2rem;
+    --button-background: #4a4a4a;
+    --button-hover-background: #6a6a6a;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--font-color);
+    font-family: 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+lotto-generator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: #2a2a2a;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.lotto-title {
+    font-size: 2.5rem;
+    color: #f0f0f0;
+    text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff;
+}
+
+.numbers-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.lotto-ball {
+    width: var(--ball-size);
+    height: var(--ball-size);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--ball-font-size);
+    font-weight: bold;
+    color: var(--font-color);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lotto-ball:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+}
+
+.generate-button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: var(--button-background);
+    color: var(--font-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.generate-button:hover {
+    background-color: var(--button-hover-background);
+}
