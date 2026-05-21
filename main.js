@@ -1,10 +1,9 @@
-
 class LottoGenerator extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
 
-    this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = \`
       <style>
         :host {
           display: flex;
@@ -13,18 +12,20 @@ class LottoGenerator extends HTMLElement {
           gap: 2rem;
           padding: 2.5rem;
           border-radius: 1.5rem;
-          background-color: #2a2a2a;
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+          background-color: var(--container-bg);
+          box-shadow: 0 15px 35px var(--card-shadow);
           width: fit-content;
           max-width: 95vw;
+          transition: all 0.3s ease;
         }
 
         .lotto-title {
             font-size: 2.5rem;
-            color: #f0f0f0;
-            text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff;
+            color: var(--title-color);
+            text-shadow: 0 0 10px var(--text-color), 0 0 20px var(--text-color);
             margin: 0;
             text-align: center;
+            transition: color 0.3s ease;
         }
 
         .sets-container {
@@ -40,13 +41,13 @@ class LottoGenerator extends HTMLElement {
             justify-content: center;
             align-items: center;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(128, 128, 128, 0.1);
             border-radius: 1rem;
             transition: background 0.3s ease;
         }
 
         .lotto-set:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(128, 128, 128, 0.2);
         }
 
         .lotto-ball {
@@ -59,13 +60,13 @@ class LottoGenerator extends HTMLElement {
             font-size: 1.5rem;
             font-weight: bold;
             color: #ffffff;
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.5), 0 0 12px rgba(255, 255, 255, 0.5);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5), 0 0 12px var(--ball-shadow);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .lotto-ball:hover {
             transform: scale(1.15) rotate(5deg);
-            box-shadow: inset 0 0 8px rgba(0,0,0,0.5), 0 0 20px rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5), 0 0 20px var(--ball-shadow);
         }
 
         .generate-button {
@@ -73,19 +74,19 @@ class LottoGenerator extends HTMLElement {
             font-size: 1.4rem;
             border-radius: 0.8rem;
             border: none;
-            background-image: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background-image: var(--btn-gradient);
             color: #ffffff;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px 0 rgba(116, 79, 168, 0.6);
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2);
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .generate-button:hover {
-            background-image: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
-            box-shadow: 0 8px 25px 0 rgba(46, 61, 230, 0.7);
+            background-image: var(--btn-hover-gradient);
+            box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.3);
             transform: translateY(-3px);
         }
 
@@ -119,13 +120,13 @@ class LottoGenerator extends HTMLElement {
       <h1 class="lotto-title">Lotto Number Generator</h1>
       <div class="sets-container"></div>
       <button class="generate-button">Generate 5 Sets</button>
-    `;
+    \`;
 
     this.setsContainer = this.shadowRoot.querySelector('.sets-container');
     this.generateButton = this.shadowRoot.querySelector('.generate-button');
 
     this.generateButton.addEventListener('click', () => this.generateNumbers());
-    this.generateNumbers(); // Generate numbers on initial load
+    this.generateNumbers();
   }
 
   generateNumbers() {
@@ -142,11 +143,11 @@ class LottoGenerator extends HTMLElement {
   }
 
   getBallColor(number) {
-    if (number <= 10) return 'linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)'; // Yellow
-    if (number <= 20) return 'linear-gradient(135deg, #2AFADF 0%, #4C83FF 100%)'; // Blue
-    if (number <= 30) return 'linear-gradient(135deg, #FF512F 0%, #DD2476 100%)'; // Red
-    if (number <= 40) return 'linear-gradient(135deg, #C4E538 0%, #42B883 100%)'; // Green
-    return 'linear-gradient(135deg, #BCC5CE 0%, #929EAD 100%)'; // Grey
+    if (number <= 10) return 'linear-gradient(135deg, #FAD961 0%, #F76B1C 100%)';
+    if (number <= 20) return 'linear-gradient(135deg, #2AFADF 0%, #4C83FF 100%)';
+    if (number <= 30) return 'linear-gradient(135deg, #FF512F 0%, #DD2476 100%)';
+    if (number <= 40) return 'linear-gradient(135deg, #C4E538 0%, #42B883 100%)';
+    return 'linear-gradient(135deg, #BCC5CE 0%, #929EAD 100%)';
   }
 
   renderNumbers(allSets) {
@@ -154,19 +155,18 @@ class LottoGenerator extends HTMLElement {
     allSets.forEach((set, index) => {
       const setRow = document.createElement('div');
       setRow.classList.add('lotto-set');
-      setRow.style.animation = `fadeIn 0.3s ease forwards ${index * 0.1}s`;
+      setRow.style.animation = \`fadeIn 0.3s ease forwards \${index * 0.1}s\`;
       setRow.style.opacity = '0';
       
-      // Keyframe animation for row entry
       if (!this.shadowRoot.querySelector('#fadeInStyle')) {
           const style = document.createElement('style');
           style.id = 'fadeInStyle';
-          style.textContent = `
+          style.textContent = \`
             @keyframes fadeIn {
               from { opacity: 0; transform: translateY(10px); }
               to { opacity: 1; transform: translateY(0); }
             }
-          `;
+          \`;
           this.shadowRoot.appendChild(style);
       }
 
@@ -183,3 +183,23 @@ class LottoGenerator extends HTMLElement {
 }
 
 customElements.define('lotto-generator', LottoGenerator);
+
+// Theme Toggle Logic
+const themeToggle = document.getElementById('theme-toggle');
+const currentTheme = localStorage.getItem('theme') || 'dark';
+
+document.documentElement.setAttribute('data-theme', currentTheme);
+updateToggleButton(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+    let theme = document.documentElement.getAttribute('data-theme');
+    let targetTheme = theme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', targetTheme);
+    localStorage.setItem('theme', targetTheme);
+    updateToggleButton(targetTheme);
+});
+
+function updateToggleButton(theme) {
+    themeToggle.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+}
